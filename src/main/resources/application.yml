@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: order-service
+  lifecycle:
+    timeout-per-shutdown-phase: 15s  # Определяет 15-секундный льготный период
+  r2dbc:
+    username: postgres
+    password: 7774256rom
+    url: r2dbc:postgresql://localhost:5434/polardb_catalog
+    pool:
+      max-create-connection-time: 2s  # Максимальное время ожидания подключения от пула
+      initial-size: 5                 # Начальный размер пула соединений
+      max-size: 10                    # Максимальное количество соединений в пуле
+  flyway:
+    user: ${spring.r2dbc.username}              # Получает значение из имени пользователя, настроенного для R2DBC
+    password: ${spring.r2dbc.password}          # Получает значение из пароля, настроенного для R2DBC
+    url: jdbc:postgresql://localhost:5434/polardb_catalog  # Та же база данных, настроенная для R2DBC, но с использованием драйвера JDBC
+    baseline-on-migrate: false
+
+
+polar:
+  catalog-service-uri: "http://localhost:9001"
+
+
+server:
+  port: 9002            # Порт, через который сервер будет принимать соединения
+  shutdown: graceful    # Обеспечивает корректное завершение работы
+  netty:
+    connection-timeout: 2s  # Как долго ждать установки TCP-соединения с сервером
+    idle-timeout: 15s       # Сколько времени ждать перед закрытием TCP-соединения, если данные не передаются
