@@ -17,6 +17,29 @@ spring:
     url: jdbc:postgresql://localhost:5434/polardb_catalog  # Та же база данных, настроенная для R2DBC, но с использованием драйвера JDBC
     baseline-on-migrate: false
 
+ # cloud:
+    #   function:
+    #   definition: dispatchOrder # Определение функции, управляемой функцией Spring Cloud
+    #   stream:
+    #    bindings:
+    #  dispatchOrder-in-0:       # Входная привязка
+    #   destination: order-dispatched     # Фактическое имя у брокера, к которому привязан биндер (биржа в RabbitMQ)
+    #   group: { spring.application.name } # Группа потребителей, заинтересованная в назначении (то же самое, что и имя приложения)
+   # acceptOrder-out-0:  Выходная привязка, созданная и управляемая StreamBridge
+    #  destination: order-accepted  Фактическое имя у брокера, к которому привязан биндер (биржа в RabbitMQ)
+    #   rabbitmq:                         # Настраивает интеграции с RabbitMQ
+   # rabbit:              Специфичная для RabbitMQ конфигурация для привязок Spring Cloud Stream
+   #   bindings:
+   #   acceptOrder-out-0:
+   #   producer:
+    #  transacted: true    Делает транзакционную привязку acceptOrder-out-0 транзакционной
+    #   host: localhost
+    #   port: 5672
+    #  username: user
+    #   password: password
+  #  connection-timeout: 5s
+
+
 
 polar:
   catalog-service-uri: "http://localhost:9001"
